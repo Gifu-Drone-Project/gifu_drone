@@ -42,7 +42,6 @@ void GifuDroneMem::updateErr(){
         }
     }
     
-    /* position and velocity directions are inertial coordinate and accele direction is body coordinate */
     xp_pid.push_err(target_point.x, current_position.x, cl);
     yp_pid.push_err(target_point.y, current_position.y, cl);
     zp_pid.push_err(fixed_alt, current_altitude.data,cl);

@@ -141,6 +141,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME}_node
   src/gifu_drone.cpp
+  src/setting.cpp
   src/starting.cpp
   src/shutdown.cpp
   src/feedback.cpp

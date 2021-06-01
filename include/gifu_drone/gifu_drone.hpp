@@ -288,5 +288,22 @@ public:
     }
 };
 
+void readme(char *name);
+void cmd_arguments(
+        int argc
+        , char **argv
+        , std::string &target_point_topic
+        , std::string &target_yaw_topic
+        , std::string &param_xml
+                   );
+bool loadParamXML(const std::string &xml_path
+        , std::vector<PID> &params
+        , double &throttle_upper_limit
+        , double &throttle_lower_limit
+        , bool &simulation
+        , bool &rc_accept
+        , bool &rc_direct_roll
+        , bool &rc_direct_pitch
+                  );
 
 #endif /* gifu_drone_h */
