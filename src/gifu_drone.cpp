@@ -268,7 +268,7 @@ bool loadParamXML(const std::string &xml_path
 int main(int argc, char **argv){
 	std::string target_point_topic("/gdp/target_point");
 	std::string target_yaw_topic("/gdp/target_yaw");
-	std::string param_xml("gifu_drone_param.xml");
+	std::string param_xml("./src/gifu_drone/gifu_drone_param.xml");
 	cmd_arguments(argc, argv
 			, target_point_topic
 			, target_yaw_topic
