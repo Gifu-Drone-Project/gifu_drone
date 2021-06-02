@@ -121,13 +121,24 @@ GifuDroneMem::GifuDroneMem(
                 "/mavros/battery", 10
                 , &GifuDroneMem::battery_cb, this);
     
-    position_sub = nh.subscribe("/slam_out_pose", 1, &GifuDroneMem::position_cb, this);
+    position_sub = nh.subscribe(
+                "/gdp/position", 10
+                , &GifuDroneMem::position_cb, this);
 
-    altitude_sub = nh.subscribe("/altitude", 10, &GifuDroneMem::altitude_cb, this);
+    altitude_sub
+        = nh.subscribe(
+                "/gdp/altitude", 10
+                , &GifuDroneMem::altitude_cb, this);
     
-    attitude_sub = nh.subscribe("/mavros/imu/data", 10, &GifuDroneMem::attitude_cb, this);
+    attitude_sub
+        = nh.subscribe(
+                "/mavros/imu/data", 10
+                , &GifuDroneMem::attitude_cb, this);
     
-    pose_sub = nh.subscribe("/mavros/local_position/pose", 10, &GifuDroneMem::pose_cb, this);
+    pose_sub
+        = nh.subscribe(
+                "/mavros/local_position/pose", 10
+                , &GifuDroneMem::pose_cb, this);
     
     reset_init_pub = nh.advertise<std_msgs::Bool>("/gdp/reset_initial", 1);
         
