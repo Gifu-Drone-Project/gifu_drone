@@ -1,5 +1,7 @@
 # gifu_drone_node
-本パッケージはMAVROSでROSと接続したドローンを制御するためのプログラムです．
+本パッケージはMAVROSでROSと接続したドローンを制御するためのプログラムです．\
+ワークスペースのsrcディレクトリ直下にcloneして使用してください．\
+catkin_makeすると使用可能になります．
 
 ## 関数
 ### void GifuDroneMem::starting()
