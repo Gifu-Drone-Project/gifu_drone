@@ -2,6 +2,9 @@
 本パッケージはMAVROSでROSと接続したドローンを制御するためのプログラムです．\
 ワークスペースのsrcディレクトリ直下にcloneして使用してください．\
 catkin_makeすると使用可能になります．
+PIDフィードバックの関数はfeedback.cpp/.hppに記述しています．\
+また，uppdate_error.cppにPIDフィードバックへ目標値と現在値，現在時刻を入力するコードが記述されています．\
+publish_ctrl.cppにPIDフィードバックの出力とMAVROSへの配信に関するコードが記述されています．
 
 ## 関数
 ### void GifuDroneMem::starting()
