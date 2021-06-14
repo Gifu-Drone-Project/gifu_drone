@@ -26,6 +26,7 @@
 #include <geometry_msgs/Point.h>
 #include <geometry_msgs/Vector3.h>
 #include <sensor_msgs/Imu.h>
+#include <sensor_msgs/Range.h>
 #include <mavros_msgs/CommandBool.h>
 #include <mavros_msgs/SetMode.h>
 #include <mavros_msgs/State.h>
@@ -42,6 +43,12 @@
 
 class GifuDroneMem{
 public:
+    
+    const int MARKER_NUMBER = 3;
+    bool nan = false;
+
+    int recognition_marker_id;//認識しているマーカのID
+
     //system
     ros::NodeHandle nh;
     ros::Rate rate;
@@ -120,7 +127,7 @@ public:
 
     bool quit_flg;
     bool fcu_is_connected;
-
+    
     tf::TransformListener listener;
     tf::StampedTransform current_transform;
     tf::StampedTransform compass_transform;
@@ -198,16 +205,16 @@ public:
         if(rc_accept){
             rc_raw = *msg;
             
-            if(rc_raw.channels[13] > 1450){
+            if(rc_raw.channels[7] > 1450){//default 13
                 rc_land = true;
             }else{
                 rc_land = false;
             }
                          
-            if((not rc_override) and rc_raw.channels[8] > 1450){
+            if((not rc_override) and rc_raw.channels[6] > 1450){//default 8
                 rc_override = true;
             }
-            if(rc_override and rc_raw.channels[8] < 1450){
+            if(rc_override and rc_raw.channels[6] < 1450){//default 8
                 rc_override = false;
             }
 
@@ -241,12 +248,12 @@ public:
             if(rc_yaw <= -M_PI / 2){
                 rc_yaw = -M_PI / 2;
             }
-                
+            /*
             rc_throttle_rate = remap((double)(rc_raw.channels[5])
                                      , 1745, 1283
                                      , 1.0 , 0.0);
-            
-            if(rc_raw.channels[6] > 1450){
+            */
+            if(rc_raw.channels[5] > 1450){//default 6
                 rc_arm = true;
                 rc_exit = false;
             }else{
@@ -262,12 +269,28 @@ public:
     
     void position_cb(const geometry_msgs::PoseStamped &msg){
         position_initializing_flag = true;
+        /* default is only here except for flag
         current_position = msg.pose.position;
+         */
+        if(0 <= atoi(msg.header.frame_id.c_str()) and atoi(msg.header.frame_id.c_str()) <= MARKER_NUMBER){
+            current_position = msg.pose.position;
+        }else if(atoi(msg.header.frame_id.c_str()) == -1){
+            
+        }
+        recognition_marker_id = atoi(msg.header.frame_id.c_str());
     }
+    
 
-    void altitude_cb(const std_msgs::Float64 &msg){
+    void altitude_cb(/*const std_msgs::Float64 &msg*/ const sensor_msgs::Range &msg){
         altitude_initializing_flag = true;
+        /* default is only here except for flag
         current_altitude.data = msg.data;
+         */
+        nan = !std::isnan(msg.range);
+        if(!((std::isnan((double)msg.range)) or (std::isinf((double)msg.range)))){
+            current_altitude.data = (double)msg.range;
+        }
+
     }
     
     void attitude_cb(const sensor_msgs::Imu& msg){

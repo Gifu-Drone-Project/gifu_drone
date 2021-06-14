@@ -50,6 +50,14 @@ void GifuDroneMem::publishCtrlInput(){
         pitch_ctrl = rc_pitch;
         yaw_ctrl = rc_yaw;
     }
+    
+    /*for AR Marker*/
+    if(!(0 <= recognition_marker_id and recognition_marker_id <= MARKER_NUMBER)){
+        roll_ctrl = 0.0;
+        pitch_ctrl = 0.0;
+        yaw_ctrl = 0.0;
+    }
+
 
     if(target_throttle.data > 1.0){target_throttle.data = 1.0;}
     if(target_throttle.data < 0.0){target_throttle.data = 0.0;}

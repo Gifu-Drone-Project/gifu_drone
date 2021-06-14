@@ -23,7 +23,8 @@ GifuDroneMem::GifuDroneMem(
   , double control_freq_
   , double initial_throttle_average_
   )
-: nh()
+: recognition_marker_id(0)
+, nh()
 , rate(control_freq_) // must faster than 2 Hz
 , current_state()
 
@@ -122,12 +123,12 @@ GifuDroneMem::GifuDroneMem(
                 , &GifuDroneMem::battery_cb, this);
     
     position_sub = nh.subscribe(
-                "/gdp/position", 10
+                /*"/gdp/position"*/"/xyz_difference", 10
                 , &GifuDroneMem::position_cb, this);
 
     altitude_sub
         = nh.subscribe(
-                "/gdp/altitude", 10
+                /*"/gdp/altitude"*/"/teraranger_evo_mini/range", 10
                 , &GifuDroneMem::altitude_cb, this);
     
     attitude_sub
