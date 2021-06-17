@@ -50,7 +50,7 @@ GifuDroneMem::GifuDroneMem(
 , rc_accept(rc_accept_)
 , rc_direct_roll(rc_direct_roll_)
 , rc_direct_pitch(rc_direct_pitch_)
-, rc_throttle_rate(0.0)
+, rc_throttle_rate(1.0)
 , rc_roll(0.0)
 , rc_pitch(0.0)
 , rc_yaw(0.0)

@@ -288,6 +288,8 @@ public:
          */
         nan = !std::isnan(msg.range);
         if(!((std::isnan((double)msg.range)) or (std::isinf((double)msg.range)))){
+            current_altitude.data = 0.0;
+        }else{
             current_altitude.data = (double)msg.range;
         }
 
