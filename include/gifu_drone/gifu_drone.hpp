@@ -279,6 +279,33 @@ public:
         }
         recognition_marker_id = atoi(msg.header.frame_id.c_str());
     }
+
+
+    double lowpass_filter(double src_value){
+        static double p0 = 1.0;
+        static double p1 = 0;
+        static double p2 = 0;
+        static double q1 = 0;
+        static double q2 = 0;
+
+        static double x1 = 0;
+		static double x2 = 0;
+		static double y1 = 0;
+		static double y2 = 0;
+
+        double filtering_value;
+
+        if(src_value == x1){
+            filtering_value = y1;
+        }else{
+            filtering_value = p0* + p1 * x1 + p2 * x2 + q1 * y1 + q2 * y2;
+            x2 = x1;
+			x1 = src_value;
+			y2 = y1;
+			y1 = filtering_value;
+        }
+        return filtering_value;
+    }
     
 
     void altitude_cb(/*const std_msgs::Float64 &msg*/ const sensor_msgs::Range &msg){
@@ -287,10 +314,11 @@ public:
         current_altitude.data = msg.data;
          */
         nan = !std::isnan(msg.range);
-        if(!((std::isnan((double)msg.range)) or (std::isinf((double)msg.range)))){
+        if(((std::isnan((double)msg.range)) or (std::isinf((double)msg.range)))){
             current_altitude.data = 0.0;
         }else{
-            current_altitude.data = (double)msg.range;
+            // current_altitude.data = (double)msg.range;
+            current_altitude.data = lowpass_filter((double)msg.range)
         }
 
     }
