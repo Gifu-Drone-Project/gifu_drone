@@ -286,9 +286,8 @@ public:
         /* default is only here except for flag
         current_altitude.data = msg.data;
          */
-        nan = !std::isnan(msg.range);
-        if(!((std::isnan((double)msg.range)) or (std::isinf((double)msg.range)))){
-            current_altitude.data = 0.0;
+        if(((std::isnan((double)msg.range)) or (std::isinf((double)msg.range)))){
+            ;  // Skip update current_altitude.data if data is nan or inf
         }else{
             current_altitude.data = (double)msg.range;
         }
