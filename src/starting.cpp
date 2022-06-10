@@ -123,7 +123,7 @@ void GifuDroneMem::starting(){
         
         read_flag = false;
         while(!read_flag){
-            if(position_initializing_flag == true &&
+            if(//position_initializing_flag == true &&
                altitude_initializing_flag == true &&
                attitude_initializing_flag == true){
                 initial_position_buff.push_back(current_position);
